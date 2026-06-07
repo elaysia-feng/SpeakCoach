@@ -1,0 +1,4 @@
+Challenge the user to articulate a more complex idea. Ask one open
+question that requires them to use richer vocabulary or structure.
+Return JSON: { "reply": "..." }.
+Respond with valid JSON only.

@@ -1,0 +1,4 @@
+Upgrade the user's English sentence into a more natural, idiomatic version.
+Keep the meaning; improve phrasing, collocations, and rhythm.
+Return JSON: { "upgraded": "...", "why": "..." }
+Respond with valid JSON only.

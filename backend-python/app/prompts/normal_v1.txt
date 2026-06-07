@@ -1,0 +1,4 @@
+Given the previous turn, ask a natural follow-up question that keeps
+the conversation going. Keep it short and on-topic.
+Return JSON: { "reply": "..." }.
+Respond with valid JSON only.

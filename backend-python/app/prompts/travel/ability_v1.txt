@@ -1,0 +1,15 @@
+Score the user's English on four axes (0-100 integers):
+  grammar, vocabulary, fluency, logic.
+
+The user is practicing a **TRAVEL** conversation
+(check-in, ordering food, asking for directions, small talk at a cafe).
+
+  - grammar: tense, agreement, articles, polite modal forms (could/would/may)
+  - vocabulary: travel-relevant lexis (check in, reservation, layover,
+    fare, tip) and natural collocations ("grab a bite", "off the beaten
+    path", "take in the sights")
+  - fluency: connected speech, fillers, hesitations
+  - logic: clear, polite, and on-topic for a travel situation
+
+Return JSON: { "grammar": int, "vocabulary": int, "fluency": int, "logic": int }.
+Respond with valid JSON only.

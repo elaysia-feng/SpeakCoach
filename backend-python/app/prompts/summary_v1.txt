@@ -1,0 +1,7 @@
+Summarise this speaking practice session. Return JSON with:
+  total_turns        : int
+  error_counts_by_type: { grammar: int, vocab: int, fluency: int, logic: int }
+  ability_score_delta: { grammar: int, vocabulary: int, fluency: int, logic: int }
+  next_focus         : string
+  highlights         : list of string
+Respond with valid JSON only.

@@ -1,0 +1,103 @@
+server:
+  port: 8080
+  servlet:
+    # 不设置全局 context-path —— controller 已经自行加上 /api 前缀。
+    context-path: /
+
+spring:
+  application:
+    name: speakcoach-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/speakcoach?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: ${MYSQL_PASSWORD:}
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  mail:
+    host: ${MAIL_HOST:smtp.qq.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          protocols: TLSv1.2
+
+email:
+  code:
+    ttl-seconds: 300   # 5 minutes
+    cooldown-seconds: 60   # 同一邮箱两次发送之间的最小间隔
+
+# 内部 Python FastAPI 网关（LLM + 评分 + 策略）。
+# Timeout 90s: LangGraph 一次 turn 串行调 5 次 LLM (~33s) + TTS (~7s) + 余量。
+# 实测 grammar_check 单次 14.5s（MiniMax API 偶发慢），30s 不够。
+python:
+  service:
+    base-url: ${PYTHON_SERVICE_URL:http://localhost:9000}
+    timeout-seconds: 150
+
+# 本地 GPT-SoVITS TTS + 音频落盘布局。
+# 所有文件都会写入 ${tts.audio-storage-path}/{userId}/{sessionId}/turn_{turnId}.wav，
+# 并通过 GET ${tts.audio-base-url}/{userId}/{sessionId}/turn_{turnId}.wav 对外提供。
+# audio-storage-path 相对于项目根目录（../storage/audio），
+# 这样从 backend-java/ 启动的 Java 服务和从 backend-python/ 启动的 Python 服务
+# 都会解析到同一份 <project-root>/storage/audio 目录。
+tts:
+  audio-storage-path: ../storage/audio
+  audio-base-url: /api/audio
+  gpt-sovits:
+    url: http://127.0.0.1:9880
+    voices:
+      linqian_voice:
+        ref-wav-path: "F:/mumu_GPT_SOVIT/GPT-SoVITS-v2pro-20250604/output/slicer_opt/slice-mutsumi-002.wav"
+        prompt-text: "クライシックじゃないのに、何わかるの？"
+        prompt-language: ja
+    default-voice: linqian_voice
+    text-language: en
+    speed: 1.0
+# CORS —— SPA 允许的来源，逗号分隔。可通过 CORS_ALLOWED_ORIGINS 环境变量覆盖
+#（例如 "http://localhost:5173,https://app.example.com"）。
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  # 内网共享密钥 —— Python write_error_book 节点调用 /api/internal/* 时需要。
+  # 生产环境必须通过 INTERNAL_SHARED_SECRET 覆盖。
+  internal:
+    shared-secret: ${INTERNAL_SHARED_SECRET:speakcoach-internal-dev-secret}
+
+jwt:
+  secret: ${JWT_SECRET:}
+  expiration-ms: 86400000
+
+logging:
+  level:
+    root: INFO
+    com.speakcoach: DEBUG
+    # 跟踪 Python + TTS WebClient Bean 发出的出站 HTTP。
+    org.springframework.web.reactive.function.client: INFO
+    reactor.netty.http.client: INFO
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.speakcoach.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+oss:
+  access-key-id: ${OSS_ACCESS_KEY_ID:}
+  access-key-secret: ${OSS_ACCESS_KEY_SECRET:}
+  endpoint: ${OSS_ENDPOINT:oss-cn-beijing.aliyuncs.com}
+  bucket-name: ${OSS_BUCKET:speak-coach}
+  domain: ${OSS_DOMAIN:https://speak-coach.oss-cn-beijing.aliyuncs.com}

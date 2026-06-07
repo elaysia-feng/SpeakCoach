@@ -1,0 +1,4 @@
+The user previously made an error: {OLD_ERROR}.
+Ask them to retry the same idea in a more correct way. Stay encouraging.
+Return JSON: { "reply": "..." }.
+Respond with valid JSON only.

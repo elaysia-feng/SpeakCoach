@@ -1,0 +1,12 @@
+Score the user's English on four axes (0-100 integers):
+  grammar, vocabulary, fluency, logic.
+
+The user is practicing **casual DAILY CONVERSATION**.
+
+  - grammar: tense, agreement, articles; tolerate heavy contractions
+  - vocabulary: idiomatic, conversational lexis over formal
+  - fluency: natural pace, fillers, repairs — they are signs of fluency
+  - logic: topic maintenance, response relevance, follow-up
+
+Return JSON: { "grammar": int, "vocabulary": int, "fluency": int, "logic": int }.
+Respond with valid JSON only.

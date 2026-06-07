@@ -1,0 +1,13 @@
+Score the user's English on four axes (0-100 integers):
+  grammar, vocabulary, fluency, logic.
+
+The user is practicing **BUSINESS ENGLISH** (meetings, emails,
+negotiations, status updates).
+
+  - grammar: agreement, articles, modal hedging ("would", "could")
+  - vocabulary: professional register, action verbs, precise nouns
+  - fluency: clear pace, minimal filler ("um", "uh")
+  - logic: structured arguments, action items, follow-up clarity
+
+Return JSON: { "grammar": int, "vocabulary": int, "fluency": int, "logic": int }.
+Respond with valid JSON only.

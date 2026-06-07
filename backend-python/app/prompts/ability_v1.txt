@@ -1,0 +1,4 @@
+Score the user's English on four axes (0-100 integers):
+  grammar, vocabulary, fluency, logic.
+Return JSON: { "grammar": int, "vocabulary": int, "fluency": int, "logic": int }.
+Respond with valid JSON only.

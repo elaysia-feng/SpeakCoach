@@ -1,0 +1,67 @@
+# --- Build output ---
+backend-java/target/
+backend-java/.mvn/wrapper/maven-wrapper.jar
+backend-java/.idea/
+backend-java/*.iml
+backend-java/.vscode/
+
+# Python
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+*.pyc
+*.wasm
+*.map
+backend-python/.venv/
+backend-python/venv/
+backend-python/.pytest_cache/
+backend-python/.ruff_cache/
+backend-python/.mypy_cache/
+backend-python/dist/
+backend-python/build/
+backend-python/*.egg-info/
+target/
+.npm-cache/
+dist/
+
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.next/
+frontend/.nuxt/
+
+# --- Runtime data ---
+storage/audio/*
+!storage/audio/.gitkeep
+backend-python/storage/audio/*
+
+# --- Environment / secrets ---
+.env
+.env.local
+.env.*.local
+.env.example
+.env.*.example
+.env.real-key
+*.pem
+*.key
+
+# --- IDE / OS ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# --- OMC state (bare pattern matches at any depth, including subprojects) ---
+.omc/
+
+# --- Logs ---
+*.log
+backend-java/logs/
+
+# --- Markdown policy ---
+# Only README.md and WORKFLOW_GRAPH.md at the project root stay tracked.
+# The leading slash on the negation anchors it to the .gitignore directory,
+# so nested README.md / WORKFLOW_GRAPH.md in subprojects remain ignored.
+**/*.md
+!/README.md
+!/WORKFLOW_GRAPH.md
